@@ -14,8 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonParserTests {
 
@@ -27,7 +26,7 @@ public class JsonParserTests {
     @DisplayName("Write to file - valid cart with full information")
     @Tag("WriteGroup")
     @Test
-    public void WriteValidCartToFileTest() {
+    public void writeValidCartToFileTest() {
         Cart testCart = createValidCart();
 
         String expected = "{\"cartName\":\"test-cart\"," +
@@ -38,9 +37,9 @@ public class JsonParserTests {
 
         try {
             String path = String.format(filePath, testFileName);
-            assertEquals(readFileAsString(path), expected);
+            assertEquals( expected, readFileAsString(path));
         } catch (Exception e) {
-            e.printStackTrace();
+            fail("Exception: Can not read file as string");
         }
     }
 
@@ -48,7 +47,7 @@ public class JsonParserTests {
     @Disabled("Disabled test")
     @Tag("WriteGroup")
     @Test
-    public void WriteEmptyCartToFileTest() {
+    public void writeEmptyCartToFileTest() {
         Cart testCart = new Cart(testFileName);
 
         String expected = "{\"cartName\":\"test-cart\",\"realItems\":[],\"virtualItems\":[],\"total\":0.0}";
@@ -57,7 +56,7 @@ public class JsonParserTests {
 
         try {
             String path = String.format(filePath, testFileName);
-            assertEquals(readFileAsString(path), expected);
+            assertEquals(expected, readFileAsString(path));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,21 +65,21 @@ public class JsonParserTests {
     @DisplayName("Read from file - valid file")
     @Tag("ReadGroup")
     @Test
-    public void ReadValidCartFromFileTest() {
+    public void readValidCartFromFileTest() {
         Cart testCart = createValidCart();
         File file = new File(String.format(filePath, testFileName));
 
         jsonParser.writeToFile(testCart);
 
-        assertEquals(jsonParser.readFromFile(file).getCartName(), testCart.getCartName());
-        assertEquals(jsonParser.readFromFile(file).getTotalPrice(), testCart.getTotalPrice());
+        assertEquals(testCart.getCartName(), jsonParser.readFromFile(file).getCartName());
+        assertEquals(testCart.getTotalPrice(), jsonParser.readFromFile(file).getTotalPrice());
     }
 
     @DisplayName("Read from file with incorrect name - No Such FIle exception is expected")
     @Tag("ReadGroup")
     @ParameterizedTest
     @ValueSource(strings = {"d", "*", "123", ".#$%", " "})
-    public void ReadCartFromInvalidFileTest(String fileName) {
+    public void readCartFromInvalidFileTest(String fileName) {
         File file = new File(String.format(filePath, fileName));
 
         assertThrows(NoSuchFileException.class,() -> jsonParser.readFromFile(file));
