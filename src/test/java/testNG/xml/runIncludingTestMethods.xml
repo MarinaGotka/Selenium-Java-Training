@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite 4 - Include test methods" verbose="1" >
+    <test name="TestsNG Test Suite">
+        <classes>
+            <class name="testNG.JsonParserTests">
+                <methods>
+                    <exclude name="readValidCartFromFileTest" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
