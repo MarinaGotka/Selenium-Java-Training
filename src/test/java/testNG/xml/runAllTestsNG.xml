@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite 1 - Run all tests" verbose="1" >
+    <parameter name="fileName"  value="InvalidFileNameFromXML"/>
+    <test name="TestsNG Test Suite">
+        <packages>
+            <package name="testNG" />
+        </packages>
+    </test>
+</suite>
