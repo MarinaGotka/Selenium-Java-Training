@@ -1,31 +1,30 @@
-import org.junit.jupiter.api.DisplayName;
+package testNG;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import shop.Cart;
 import shop.RealItem;
-
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.Test;
 import shop.VirtualItem;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 public class CartTests {
 
-    @DisplayName("Check name and total price of created Cart")
-    @Test
+    @Test(testName = "Check name and total price of created Cart", groups = { "group2" })
     void cartNameAndPriceTest() {
         String expectedName = "test-cart";
         Cart testCart = new Cart(expectedName);
 
-        assertAll("Cart name and price after cart creation",
-                () -> assertEquals(expectedName, testCart.getCartName()),
-                () -> assertEquals(0, testCart.getTotalPrice())
-        );
+        SoftAssert asert =new SoftAssert();
+
+        asert.assertEquals(testCart.getCartName(), expectedName);
+        asert.assertEquals(testCart.getTotalPrice(), 0.0);
+        asert.assertAll();
     }
 
-    @DisplayName("Calculate total after adding real item")
-    @Test
+    @Test(testName = "Calculate total after adding real item")
     void calculateTotalTest() {
         String expectedName = "test-cart";
         double itemPrice = 5;
@@ -39,11 +38,10 @@ public class CartTests {
         double expectedTotal = itemPrice + itemPrice*TAX;
         double actualTotal = testCart.getTotalPrice();
 
-        assertEquals( expectedTotal, actualTotal, 0);
+        Assert.assertEquals( actualTotal, expectedTotal,0);
     }
 
-    @DisplayName("Create cart with real and virtual items and show it")
-    @Test
+    @Test(testName = "Create cart with real and virtual items and show it")
     void showItemsTest() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
@@ -75,6 +73,6 @@ public class CartTests {
         String expectedString = String.format("Class: class shop.RealItem; Name: %s; Price: %s; Weight: %s\r\n", name, itemPrice, itemWeight);
         expectedString += String.format("Class: class shop.VirtualItem; Name: %s; Price: %s; Size on disk: %s", virtualName, virtualPrice, size);
 
-        assertEquals(expectedString, outContent.toString().trim());
+        Assert.assertEquals(outContent.toString().trim(), expectedString);
     }
 }
