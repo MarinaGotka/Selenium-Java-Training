@@ -1,10 +1,12 @@
-package selenium;
+package selenium.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 public class LoginPage {
 
@@ -17,12 +19,11 @@ public class LoginPage {
 
     private static WebDriver driver;
 
-    public LoginPage(WebDriver driver){
+    public LoginPage(WebDriver driver) {
         this.driver = driver;
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     }
 
-    public void login(String username, String password){
+    public void login(String username, String password) {
 
         driver.findElement(logInBannerButton).click();
 
@@ -35,10 +36,15 @@ public class LoginPage {
         passwordElement.clear();
         passwordElement.sendKeys(password);
         driver.findElement(logInButton).click();
+
+        //explicit waiter with polling frequency 500 ms
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.pollingEvery(Duration.ofMillis(500));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(accountName));
     }
 
-    public Boolean isLoggedIn(){
+    public Boolean isLoggedIn() {
 
-        return  driver.findElement(accountName).isDisplayed();
+        return driver.findElement(accountName).isDisplayed();
     }
 }
