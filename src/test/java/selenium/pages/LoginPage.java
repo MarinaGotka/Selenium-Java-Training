@@ -3,7 +3,6 @@ package selenium.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -15,7 +14,6 @@ public class LoginPage {
     private final By logInButton = By.id("passp:sign-in");
     private final By usernameField = By.xpath("//div[@class = 'passp-login-form']//input[@name= 'login']");
     private final By passwordField = By.cssSelector("#passp-field-passwd");
-    private final By accountName = By.className("PSHeader-User");
 
     private static WebDriver driver;
 
@@ -23,7 +21,7 @@ public class LoginPage {
         this.driver = driver;
     }
 
-    public void login(String username, String password) {
+    public HomeMailPage login(String username, String password) {
 
         driver.findElement(logInBannerButton).click();
 
@@ -37,14 +35,13 @@ public class LoginPage {
         passwordElement.sendKeys(password);
         driver.findElement(logInButton).click();
 
+        HomeMailPage homeMailPage = new HomeMailPage(driver);
+
         //explicit waiter with polling frequency 500 ms
         WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.pollingEvery(Duration.ofMillis(500));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(accountName));
-    }
+        wait.until(driver -> homeMailPage.isLoggedIn());
 
-    public Boolean isLoggedIn() {
-
-        return driver.findElement(accountName).isDisplayed();
+        return homeMailPage;
     }
 }
