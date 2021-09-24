@@ -43,7 +43,6 @@ public class LoginTests {
     @DisplayName("Login with correct credentials and logout.")
     @Test
     void logoutTest() {
-
         String username = "java1.test";
         String password = "1QAZ2wsx";
 

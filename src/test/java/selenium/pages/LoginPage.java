@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class LoginPage {
+public class LoginPage extends BasePage {
 
     private final By logInBannerButton = By.xpath("//div[@class = 'HeadBanner-ButtonsWrapper']//a[2]");
 
@@ -15,10 +15,8 @@ public class LoginPage {
     private final By usernameField = By.xpath("//div[@class = 'passp-login-form']//input[@name= 'login']");
     private final By passwordField = By.cssSelector("#passp-field-passwd");
 
-    private static WebDriver driver;
-
     public LoginPage(WebDriver driver) {
-        this.driver = driver;
+       super(driver);
     }
 
     public HomeMailPage login(String username, String password) {

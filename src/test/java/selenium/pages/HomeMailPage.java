@@ -3,14 +3,13 @@ package selenium.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class HomeMailPage {
+public class HomeMailPage extends BasePage {
 
     private final By logoutLink = By.xpath("//a[@aria-label='Log out']");
     private final By accountName = By.className("PSHeader-User");
 
-    private static WebDriver driver;
-
     public HomeMailPage(WebDriver driver) {
+        super(driver);
 
         this.driver = driver;
     }

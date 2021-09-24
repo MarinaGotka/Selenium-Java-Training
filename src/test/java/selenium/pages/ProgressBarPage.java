@@ -7,16 +7,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class ProgressBarPage {
+public class ProgressBarPage extends BasePage{
     private final String PROGRESS_BAR_URL = "https://www.seleniumeasy.com/test/bootstrap-download-progress-demo.html";
 
     private final By downloadButton = By.cssSelector("#cricle-btn");
     private final By percentElement = By.cssSelector(".percenttext");
 
-    private static WebDriver driver;
-
     public ProgressBarPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
+
         driver.get(PROGRESS_BAR_URL);
     }
 

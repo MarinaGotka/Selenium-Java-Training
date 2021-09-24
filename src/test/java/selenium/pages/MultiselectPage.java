@@ -8,17 +8,17 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.List;
 import java.util.Random;
 
-public class MultiselectPage {
+public class MultiselectPage extends BasePage{
     private final String MULTISELECT_URL = "https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html";
 
     private final By select = By.id("multi-select");
     private final By options = By.xpath("//select[@id = 'multi-select']/option");
 
     Select selectElement;
-    private static WebDriver driver;
 
     public MultiselectPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
+
         driver.get(MULTISELECT_URL);
     }
 

@@ -9,7 +9,7 @@ import selenium.Employee;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TablePage {
+public class TablePage extends BasePage {
     private final String SORT_SEARCH_URL = "https://www.seleniumeasy.com/test/table-sort-search-demo.html";
 
     private final By selectEntriesCountElement = By.cssSelector("select[name = 'example_length']");
@@ -18,10 +18,9 @@ public class TablePage {
 
     private final String tableRowElementFormat = "//table/tbody/tr[%s]/%s";
 
-    private static WebDriver driver;
-
     public TablePage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
+
         driver.get(SORT_SEARCH_URL);
     }
 

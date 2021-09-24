@@ -5,11 +5,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import selenium.pages.BasePage;
+
 import java.time.Duration;
 
-public class LoginPage {
-
-    private static WebDriver driver;
+public class LoginPage extends BasePage {
 
     @FindBy(xpath = "//div[@class = 'HeadBanner-ButtonsWrapper']//a[2]")
     WebElement logInBannerButton;
@@ -24,7 +24,8 @@ public class LoginPage {
     WebElement passwordField;
 
     public LoginPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
+
         PageFactory.initElements(driver, this);
     }
 

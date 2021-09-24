@@ -4,7 +4,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class AlertPage {
+public class AlertPage extends BasePage{
 
     private final String ALERT_URL = "https://www.seleniumeasy.com/test/javascript-alert-box-demo.html";
 
@@ -17,12 +17,12 @@ public class AlertPage {
 
     private final By confirmResult = By.cssSelector("#confirm-demo");
 
-    private static WebDriver driver;
     private Alert alert;
     private String actualAlertText;
 
     public AlertPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
+
         driver.get(ALERT_URL);
     }
 

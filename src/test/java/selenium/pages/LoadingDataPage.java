@@ -5,16 +5,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LoadingDataPage {
+public class LoadingDataPage extends BasePage{
     private final String LOADING_DATA_URL = "https://www.seleniumeasy.com/test/dynamic-data-loading-demo.html";
 
     private final By getUserButton = By.cssSelector("#save");
     private final By userInfoElement = By.cssSelector("#loading br");
 
-    private static WebDriver driver;
-
     public LoadingDataPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
+
         driver.get(LOADING_DATA_URL);
     }
 

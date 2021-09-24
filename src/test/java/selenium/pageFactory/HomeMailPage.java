@@ -5,10 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import selenium.pages.BasePage;
 
-public class HomeMailPage {
+public class HomeMailPage extends BasePage {
 
-    private static WebDriver driver;
     private final String accountNameLocator = "PSHeader-User";
 
     @FindBy(xpath = "//a[@aria-label='Log out']")
@@ -18,9 +18,10 @@ public class HomeMailPage {
     WebElement accountName;
 
     public HomeMailPage(WebDriver driver) {
+        super(driver);
 
-        this.driver = driver;
         PageFactory.initElements(driver, this);
+        takeScreenshot();
     }
 
     public void logout() {
