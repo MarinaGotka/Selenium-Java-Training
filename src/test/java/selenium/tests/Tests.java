@@ -1,9 +1,10 @@
-package selenium;
+package selenium.tests;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import selenium.Employee;
 import selenium.pages.*;
 
 import java.util.List;
