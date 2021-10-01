@@ -3,30 +3,38 @@ package selenium.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import selenium.Employee;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TablePage {
-    private final String SORT_SEARCH_URL = "https://www.seleniumeasy.com/test/table-sort-search-demo.html";
+public class TablePage extends BasePage {
+    private final String URL = "https://www.seleniumeasy.com/test/table-sort-search-demo.html";
 
-    private final By selectEntriesCountElement = By.cssSelector("select[name = 'example_length']");
-    private final By tableRowElement = By.xpath("//table/tbody/tr");
-    private final By nextButton = By.xpath("//a[@class = 'paginate_button next']");
+    @FindBy(css = "select[name = 'example_length']")
+    WebElement selectEntriesCountElement;
+
+    @FindBy(xpath = "//table/tbody/tr")
+    List<WebElement> tableRowElements;
+
+    @FindBy(xpath = "//a[@class = 'paginate_button next']")
+    WebElement nextButton;
 
     private final String tableRowElementFormat = "//table/tbody/tr[%s]/%s";
 
-    private static WebDriver driver;
-
     public TablePage(WebDriver driver) {
-        this.driver = driver;
-        driver.get(SORT_SEARCH_URL);
+        super(driver);
+    }
+
+    @Override
+    protected String GetURL() {
+        return URL;
     }
 
     public void selectEntriesCount(int count) {
-        Select selectElement = new Select(driver.findElement(selectEntriesCountElement));
+        Select selectElement = new Select(selectEntriesCountElement);
         selectElement.selectByValue(String.valueOf(count));
     }
 
@@ -34,11 +42,10 @@ public class TablePage {
         List<Employee> employees = new ArrayList<>();
 
         do {
-            List<WebElement> allRowsOnPage = driver.findElements(tableRowElement);
-            employees.addAll(selectEmployees(allRowsOnPage, ageMin, salaryMax));
+            employees.addAll(selectEmployees(tableRowElements, ageMin, salaryMax));
 
-            if (!driver.findElements(nextButton).isEmpty()) {
-                driver.findElement(nextButton).click();
+            if (!nextButton.isDisplayed()) {
+                nextButton.click();
             } else {
                 break;
             }

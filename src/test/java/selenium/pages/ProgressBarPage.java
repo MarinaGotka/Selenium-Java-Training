@@ -1,33 +1,38 @@
 package selenium.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class ProgressBarPage {
-    private final String PROGRESS_BAR_URL = "https://www.seleniumeasy.com/test/bootstrap-download-progress-demo.html";
+public class ProgressBarPage extends BasePage{
+    private final String URL = "https://www.seleniumeasy.com/test/bootstrap-download-progress-demo.html";
 
-    private final By downloadButton = By.cssSelector("#cricle-btn");
-    private final By percentElement = By.cssSelector(".percenttext");
+    @FindBy(css = "#cricle-btn")
+    WebElement downloadButton;
 
-    private static WebDriver driver;
+    @FindBy(css = ".percenttext")
+    WebElement percentElement;
 
     public ProgressBarPage(WebDriver driver) {
-        this.driver = driver;
-        driver.get(PROGRESS_BAR_URL);
+        super(driver);
+    }
+
+    @Override
+    protected String GetURL() {
+        return URL;
     }
 
     public void startDownload() {
-        driver.findElement(downloadButton).click();
+        downloadButton.click();
     }
 
     public void waitUntilPercent(int percent) {
         WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.pollingEvery(Duration.ofMillis(10));
-        wait.until(ExpectedConditions.textToBe(percentElement, percent + "%"));
+        wait.until(driver -> percentElement.getText().equals(percent + "%"));
     }
 
     public void refresh() {
@@ -35,7 +40,7 @@ public class ProgressBarPage {
     }
 
     public int getPercentValue() {
-        String percentText = driver.findElement(percentElement).getText();
+        String percentText = percentElement.getText();
 
         //remove '%' char and return int value
         return Integer.valueOf(percentText.substring(0, percentText.length() - 1));

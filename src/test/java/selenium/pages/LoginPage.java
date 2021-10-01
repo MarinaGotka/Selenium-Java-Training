@@ -3,37 +3,50 @@ package selenium.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class LoginPage {
+public class LoginPage extends BasePage {
+    private final String URL = "https://mail.yandex.com/";
 
-    private final By logInBannerButton = By.xpath("//div[@class = 'HeadBanner-ButtonsWrapper']//a[2]");
+    @FindBy(xpath = "//div[@class = 'HeadBanner-ButtonsWrapper']//a[2]")
+    WebElement logInBannerButton;
 
-    private final By logInButton = By.id("passp:sign-in");
-    private final By usernameField = By.xpath("//div[@class = 'passp-login-form']//input[@name= 'login']");
-    private final By passwordField = By.cssSelector("#passp-field-passwd");
+    @FindBy(id = "passp:sign-in")
+    WebElement logInButton;
 
-    private static WebDriver driver;
+    @FindBy(xpath = "//div[@class = 'passp-login-form']//input[@name= 'login']")
+    WebElement usernameField;
+
+    @FindBy(css = "#passp-field-passwd")
+    WebElement passwordField;
+
+    @FindBy(className = "PSHeader-User")
+    WebElement accountName;
 
     public LoginPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
-    public HomeMailPage login(String username, String password) {
+    @Override
+    protected String GetURL() {
+        return URL;
+    }
 
-        driver.findElement(logInBannerButton).click();
+    public void login(String username, String password) {
 
-        WebElement usernameElement = driver.findElement(usernameField);
-        usernameElement.clear();
-        usernameElement.sendKeys(username);
-        driver.findElement(logInButton).click();
+        logInBannerButton.click();
 
-        WebElement passwordElement = driver.findElement(passwordField);
-        passwordElement.clear();
-        passwordElement.sendKeys(password);
-        driver.findElement(logInButton).click();
+        usernameField.clear();
+        usernameField.sendKeys(username);
+        logInButton.click();
+
+        passwordField.clear();
+        passwordField.sendKeys(password);
+        logInButton.click();
 
         HomeMailPage homeMailPage = new HomeMailPage(driver);
 
@@ -41,7 +54,5 @@ public class LoginPage {
         WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.pollingEvery(Duration.ofMillis(500));
         wait.until(driver -> homeMailPage.isLoggedIn());
-
-        return homeMailPage;
     }
 }
