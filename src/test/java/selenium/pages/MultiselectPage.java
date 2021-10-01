@@ -1,33 +1,38 @@
 package selenium.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 import java.util.Random;
 
 public class MultiselectPage extends BasePage{
-    private final String MULTISELECT_URL = "https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html";
+    private final String URL = "https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html";
 
-    private final By select = By.id("multi-select");
-    private final By options = By.xpath("//select[@id = 'multi-select']/option");
+    @FindBy(id = "multi-select")
+    WebElement select;
+
+    @FindBy(xpath = "//select[@id = 'multi-select']/option")
+    List<WebElement> options;
 
     Select selectElement;
 
     public MultiselectPage(WebDriver driver) {
         super(driver);
+    }
 
-        driver.get(MULTISELECT_URL);
+    @Override
+    protected String GetURL() {
+        return URL;
     }
 
     public void selectRandomOptions(int numberOptions) {
-        List<WebElement> optionsElements = driver.findElements(options);
-        selectElement = new Select(driver.findElement(select));
+        selectElement = new Select(select);
 
         for (int i = numberOptions; i > 0; i--) {
-            int index = new Random().nextInt(optionsElements.size());
+            int index = new Random().nextInt(options.size());
             selectElement.selectByIndex(index);
         }
     }

@@ -2,24 +2,12 @@ package selenium.tests;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import selenium.Employee;
 import selenium.pages.*;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class Tests {
-
-    private WebDriver driver;
-
-    @BeforeEach
-    public void setup() {
-
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-    }
+public class Tests extends TestBase{
 
     @DisplayName("Multiselect test")
     @Test
@@ -27,6 +15,7 @@ public class Tests {
         int numberSelections = 3;
 
         MultiselectPage multiselectPage = new MultiselectPage(driver);
+        multiselectPage.GoToURL();
         multiselectPage.selectRandomOptions(numberSelections);
 
         Assert.assertTrue(multiselectPage.getAllSelectedOptions().size() == numberSelections);
@@ -36,6 +25,7 @@ public class Tests {
     @Test
     void alertBoxTest() {
         AlertPage alertPage = new AlertPage(driver);
+        alertPage.GoToURL();
         alertPage.clickForAlertBox();
 
         Assert.assertTrue(alertPage.isAlertBoxMessageCorrect());
@@ -45,6 +35,7 @@ public class Tests {
     @Test
     void confirmBoxCancelTest() {
         AlertPage alertPage = new AlertPage(driver);
+        alertPage.GoToURL();
         alertPage.clickCancelForConfirmBox();
 
         Assert.assertTrue(alertPage.isConfirmCancelClicked());
@@ -54,6 +45,7 @@ public class Tests {
     @Test
     void confirmBoxOkTest() {
         AlertPage alertPage = new AlertPage(driver);
+        alertPage.GoToURL();
         alertPage.clickOkForConfirmBox();
 
         Assert.assertTrue(alertPage.isConfirmOkClicked());
@@ -63,6 +55,7 @@ public class Tests {
     @Test
     void loadUserTest() {
         LoadingDataPage loadingDataPage = new LoadingDataPage(driver);
+        loadingDataPage.GoToURL();
         loadingDataPage.getRandomUser();
 
         Assert.assertTrue(loadingDataPage.isUserDisplayed());
@@ -72,6 +65,7 @@ public class Tests {
     @Test
     void progressBarTest() {
         ProgressBarPage progressBarPage = new ProgressBarPage(driver);
+        progressBarPage.GoToURL();
         progressBarPage.startDownload();
         progressBarPage.waitUntilPercent(50);
 
@@ -86,6 +80,7 @@ public class Tests {
     @Test
     void sortAndSearchTest() {
         TablePage tablePage = new TablePage(driver);
+        tablePage.GoToURL();
         tablePage.selectEntriesCount(10);
         List<Employee> list = tablePage.selectEntries(20, 200000);
 
@@ -94,12 +89,5 @@ public class Tests {
         for (Employee e : list) {
             System.out.println(e.toString());
         }
-    }
-
-    @AfterEach
-    public void tearDown() {
-
-        driver.close();
-        driver.quit();
     }
 }

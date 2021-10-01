@@ -3,13 +3,18 @@ package selenium.pages;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class AlertPage extends BasePage{
 
-    private final String ALERT_URL = "https://www.seleniumeasy.com/test/javascript-alert-box-demo.html";
+    private final String URL = "https://www.seleniumeasy.com/test/javascript-alert-box-demo.html";
 
-    private final By alertBoxButton = By.xpath("//button[@onclick= 'myAlertFunction()']");
-    private final By confirmBoxButton = By.xpath("//button[@onclick= 'myConfirmFunction()']");
+    @FindBy(xpath = "//button[@onclick= 'myAlertFunction()']")
+    WebElement alertBoxButton;
+
+    @FindBy(xpath = "//button[@onclick= 'myConfirmFunction()']")
+    WebElement confirmBoxButton;
 
     private final String alertBoxMessage = "I am an alert box!";
     private final String confirmResultOkMessage = "You pressed OK!";
@@ -22,8 +27,6 @@ public class AlertPage extends BasePage{
 
     public AlertPage(WebDriver driver) {
         super(driver);
-
-        driver.get(ALERT_URL);
     }
 
     public void acceptAlert() {
@@ -38,17 +41,17 @@ public class AlertPage extends BasePage{
     }
 
     public void clickForAlertBox() {
-        driver.findElement(alertBoxButton).click();
+        alertBoxButton.click();
         acceptAlert();
     }
 
     public void clickOkForConfirmBox() {
-        driver.findElement(confirmBoxButton).click();
+        confirmBoxButton.click();
         acceptAlert();
     }
 
     public void clickCancelForConfirmBox() {
-        driver.findElement(confirmBoxButton).click();
+        confirmBoxButton.click();
         dissmissAlert();
     }
 
@@ -62,5 +65,11 @@ public class AlertPage extends BasePage{
 
     public boolean isConfirmCancelClicked() {
         return driver.findElement(confirmResult).getText().equals(confirmResultCancelMessage);
+    }
+
+    @Override
+    protected String GetURL() {
+
+        return URL;
     }
 }

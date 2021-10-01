@@ -1,27 +1,42 @@
 package selenium.pages;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import selenium.Utilities;
 
 public class HomeMailPage extends BasePage {
 
-    private final By logoutLink = By.xpath("//a[@aria-label='Log out']");
-    private final By accountName = By.className("PSHeader-User");
+    @FindBy(xpath = "//a[@aria-label='Log out']")
+    WebElement logoutLink;
+
+    @FindBy(className = "PSHeader-User")
+    WebElement accountName;
 
     public HomeMailPage(WebDriver driver) {
         super(driver);
 
-        this.driver = driver;
+        Utilities.takeScreenshot(driver);
+    }
+
+    @Override
+    protected String GetURL() {
+        return URL;
     }
 
     public void logout() {
 
-        driver.findElement(accountName).click();
-        driver.findElement(logoutLink).click();
+        accountName.click();
+        logoutLink.click();
     }
 
     public Boolean isLoggedIn() {
 
-        return !driver.findElements(accountName).isEmpty();
+        try {
+            return accountName.isDisplayed();
+        } catch (NoSuchElementException ex) {
+            return false;
+        }
     }
 }

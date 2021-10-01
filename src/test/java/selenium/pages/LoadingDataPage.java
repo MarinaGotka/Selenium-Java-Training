@@ -1,32 +1,38 @@
 package selenium.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoadingDataPage extends BasePage{
-    private final String LOADING_DATA_URL = "https://www.seleniumeasy.com/test/dynamic-data-loading-demo.html";
+    private final String URL = "https://www.seleniumeasy.com/test/dynamic-data-loading-demo.html";
 
-    private final By getUserButton = By.cssSelector("#save");
-    private final By userInfoElement = By.cssSelector("#loading br");
+    @FindBy(css = "#save")
+    WebElement getUserButton;
+
+    @FindBy(css = "#loading br")
+    WebElement userInfoElement;
 
     public LoadingDataPage(WebDriver driver) {
         super(driver);
+    }
 
-        driver.get(LOADING_DATA_URL);
+    @Override
+    protected String GetURL() {
+        return URL;
     }
 
     public LoadingDataPage getRandomUser() {
-        driver.findElement(getUserButton).click();
+        getUserButton.click();
 
         WebDriverWait wait = new WebDriverWait(driver, 20);
-        wait.until(ExpectedConditions.presenceOfElementLocated(userInfoElement));
+        wait.until(driver -> userInfoElement.isEnabled());
 
         return this;
     }
 
     public boolean isUserDisplayed() {
-        return driver.findElement(userInfoElement).isEnabled();
+        return userInfoElement.isEnabled();
     }
 }
