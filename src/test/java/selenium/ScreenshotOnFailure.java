@@ -1,19 +1,18 @@
 package selenium;
 
+import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.api.extension.TestExecutionExceptionHandler;
 
-import java.io.IOException;
+import java.lang.reflect.Method;
 
-public class ScreenshotOnFailure implements TestExecutionExceptionHandler {
+public class ScreenshotOnFailure implements AfterTestExecutionCallback {
 
     @Override
-    public void handleTestExecutionException(ExtensionContext context, Throwable throwable)
-            throws Throwable {
-        if (throwable instanceof IOException) {
-            return;
+    public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
+
+        Method method = extensionContext.getRequiredTestMethod();
+        if (extensionContext.getExecutionException().isPresent()) {
+            Utilities.takeScreenshot(method.getName());
         }
-        Utilities.takeScreenshot(context.getDisplayName());
-        throw throwable;
     }
 }

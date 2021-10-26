@@ -1,7 +1,7 @@
 package selenium.tests;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 import selenium.ScreenshotOnFailure;
 import selenium.WebDriverFactory;
@@ -9,13 +9,13 @@ import selenium.WebDriverFactory;
 @ExtendWith(ScreenshotOnFailure.class)
 public class TestBase {
 
-    @BeforeEach
-    public void setup() {
-        WebDriverFactory.initialize("chrome");
+    @BeforeAll
+    public static void beforeAll() {
+        WebDriverFactory.initialize("firefox");
     }
 
-    @AfterEach
-    public void cleanUp() {
+    @AfterAll
+    public static void afterAll() {
         WebDriverFactory.quit();
     }
 }
