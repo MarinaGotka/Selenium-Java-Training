@@ -13,9 +13,9 @@ public abstract class BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    protected abstract String GetURL();
+    protected abstract String getURL();
 
-    public void GoToURL(){
-        driver.get(GetURL());
+    public void goToURL(){
+        driver.get(getURL());
     }
 }

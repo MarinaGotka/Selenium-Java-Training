@@ -19,7 +19,7 @@ public class Tests extends TestBase{
         int numberSelections = 3;
 
         MultiselectPage multiselectPage = new MultiselectPage(WebDriverFactory.driver);
-        multiselectPage.GoToURL();
+        multiselectPage.goToURL();
         multiselectPage.selectRandomOptions(numberSelections);
 
         Assert.assertTrue(multiselectPage.getAllSelectedOptions().size() == numberSelections);
@@ -31,7 +31,7 @@ public class Tests extends TestBase{
     @Test
     void alertBoxTest() {
         AlertPage alertPage = new AlertPage(WebDriverFactory.driver);
-        alertPage.GoToURL();
+        alertPage.goToURL();
         alertPage.clickForAlertBox();
 
         Assert.assertTrue(alertPage.isAlertBoxMessageCorrect());
@@ -42,7 +42,7 @@ public class Tests extends TestBase{
     @Test
     void confirmBoxCancelTest() {
         AlertPage alertPage = new AlertPage(WebDriverFactory.driver);
-        alertPage.GoToURL();
+        alertPage.goToURL();
         alertPage.clickCancelForConfirmBox();
 
         Assert.assertTrue(alertPage.isConfirmCancelClicked());
@@ -53,7 +53,7 @@ public class Tests extends TestBase{
     @Test
     void confirmBoxOkTest() {
         AlertPage alertPage = new AlertPage(WebDriverFactory.driver);
-        alertPage.GoToURL();
+        alertPage.goToURL();
         alertPage.clickOkForConfirmBox();
 
         Assert.assertTrue(alertPage.isConfirmOkClicked());
@@ -64,7 +64,7 @@ public class Tests extends TestBase{
     @Test
     void loadUserTest() {
         LoadingDataPage loadingDataPage = new LoadingDataPage(WebDriverFactory.driver);
-        loadingDataPage.GoToURL();
+        loadingDataPage.goToURL();
         loadingDataPage.getRandomUser();
 
         Assert.assertTrue(loadingDataPage.isUserDisplayed());
@@ -75,7 +75,7 @@ public class Tests extends TestBase{
     @Test
     void progressBarTest() {
         ProgressBarPage progressBarPage = new ProgressBarPage(WebDriverFactory.driver);
-        progressBarPage.GoToURL();
+        progressBarPage.goToURL();
         progressBarPage.startDownload();
         progressBarPage.waitUntilPercent(50);
 
@@ -91,7 +91,7 @@ public class Tests extends TestBase{
     @Test
     void sortAndSearchTest() {
         TablePage tablePage = new TablePage(WebDriverFactory.driver);
-        tablePage.GoToURL();
+        tablePage.goToURL();
         tablePage.selectEntriesCount(10);
         List<Employee> list = tablePage.selectEntries(20, 200000);
 
