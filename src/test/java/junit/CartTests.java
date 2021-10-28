@@ -4,8 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import shop.Cart;
 import shop.RealItem;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import shop.VirtualItem;

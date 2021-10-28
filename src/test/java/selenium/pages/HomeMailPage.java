@@ -16,12 +16,10 @@ public class HomeMailPage extends BasePage {
 
     public HomeMailPage(WebDriver driver) {
         super(driver);
-
-        Utilities.takeScreenshot(driver);
     }
 
     @Override
-    protected String GetURL() {
+    protected String getURL() {
         return URL;
     }
 
