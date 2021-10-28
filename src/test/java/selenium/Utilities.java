@@ -1,25 +1,42 @@
 package selenium;
 
-import org.apache.maven.shared.utils.io.FileUtils;
+import io.qameta.allure.Attachment;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 public class Utilities {
 
-    public static void takeScreenshot(WebDriver driver)
+    @Attachment(value = "Screenshot", type = "image/png")
+    public static byte[] takeScreenshot(String fileName)
     {
-        TakesScreenshot scrShot =((TakesScreenshot)driver);
+        TakesScreenshot scrShot =((TakesScreenshot)WebDriverFactory.driver);
         File srcFile=scrShot.getScreenshotAs(OutputType.FILE);
 
         try {
-            FileUtils.copyFile(srcFile, new File("%s\\screenshot.png", Paths.get("").toAbsolutePath().toString()));
+            if(fileName == null)
+            {
+                fileName = "screenshot";
+            }
+
+            File file = new File(Paths.get("").toAbsolutePath().toString() + fileName + ".png");
+            FileUtils.copyFile(srcFile, file);
+
+            System.out.println(String.format("Screenshot is saved as %s.",file));
+
+            return  scrShot.getScreenshotAs(OutputType.BYTES);
         } catch (IOException e) {
             System.out.println("Screenshot can't be saved.");
+            return  null;
         }
+    }
+
+    public static String getUniqueId() {
+        return String.format("%s_%s", UUID.randomUUID().toString().substring(0, 5), System.currentTimeMillis() / 1000);
     }
 }
