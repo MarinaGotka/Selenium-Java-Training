@@ -30,7 +30,7 @@ public class LoginPage extends BasePage {
     }
 
     @Override
-    protected String GetURL() {
+    protected String getURL() {
         return URL;
     }
 

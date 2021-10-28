@@ -20,7 +20,7 @@ public class LoginTests extends TestBase{
     void loginTest(String username, String password) {
 
         LoginPage loginPage = new LoginPage(WebDriverFactory.driver);
-        loginPage.GoToURL();
+        loginPage.goToURL();
         loginPage.login(username, password);
 
         HomeMailPage homeMailPage = new HomeMailPage(WebDriverFactory.driver);
@@ -36,7 +36,7 @@ public class LoginTests extends TestBase{
         String password = "1QAZ2wsx";
 
         LoginPage loginPage = new LoginPage(WebDriverFactory.driver);
-        loginPage.GoToURL();
+        loginPage.goToURL();
         loginPage.login(username, password);
 
         HomeMailPage homeMailPage = new HomeMailPage(WebDriverFactory.driver);
