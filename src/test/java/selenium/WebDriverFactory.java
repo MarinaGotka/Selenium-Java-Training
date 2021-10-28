@@ -1,6 +1,8 @@
 package selenium;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -26,6 +28,10 @@ public class WebDriverFactory {
             driver.manage().window().maximize();
             driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         }
+    }
+
+    public static void scrollIntoView(WebElement element){
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     public static void quit() {

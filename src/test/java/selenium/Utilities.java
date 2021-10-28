@@ -8,6 +8,7 @@ import org.openqa.selenium.TakesScreenshot;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 public class Utilities {
 
@@ -33,5 +34,9 @@ public class Utilities {
             System.out.println("Screenshot can't be saved.");
             return  null;
         }
+    }
+
+    public static String getUniqueId() {
+        return String.format("%s_%s", UUID.randomUUID().toString().substring(0, 5), System.currentTimeMillis() / 1000);
     }
 }
